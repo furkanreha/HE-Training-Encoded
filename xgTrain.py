@@ -42,13 +42,16 @@ y = np.load(currentDirectory + '/ConcatData/yConcat.npy')
 
 X, y = shuffle(X, y, random_state=5)
 
-testX = X[45:90]
-all_values_to_ones(testX)
-testY = y[45:90]
+dataSetSize = 45
+testSize = 45
 
-X = X[0:45]  # Smaller size for test run
+testX = X[dataSetSize:dataSetSize + testSize]
+all_values_to_ones(testX)
+testY = y[dataSetSize:dataSetSize + testSize]
+
+X = X[0:dataSetSize]  # Smaller size for test run
 all_values_to_ones(X)
-y = y[0:45]  # Smaller size for test run
+y = y[0:dataSetSize]  # Smaller size for test run
 
 if len(set(y)) == 11:
     xgbModel = XGBClassifier(n_estimators=tree, max_depth=depth, objective='multi:softprob', eval_metric='merror',

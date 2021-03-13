@@ -26,7 +26,7 @@ def score_calc_class(class_no, sample):
             else:
                 my_id = curr[6]
             curr = df_mdl[df_mdl['ID'] == my_id].values[0]
-        gain = gain + curr[-2]
+        gain = gain + curr[-3]
     return gain
 
 
