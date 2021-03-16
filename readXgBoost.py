@@ -1,6 +1,7 @@
 import json
 import numpy as np
 import pandas
+import time
 
 pandas.set_option('display.max_columns', None)
 
@@ -31,14 +32,14 @@ def score_calc_class(class_no, sample):
 
 
 def predict_samples():
+    final_predictions_calculated = []
     for i in range(len(test_X)):
         sample = i
         score_list = []
         for k in range(numberOfClasses):
             score_list.append(score_calc_class(k, sample))
-
-        print(score_list)
-        print(score_list.index(max(score_list)), "-", predictions[i])
+        final_predictions_calculated.append(score_list.index(max(score_list)))
+    return final_predictions_calculated
 
 
 with open("testX.txt", "r") as f:
@@ -54,6 +55,9 @@ print(50 * "*")
 numberOfClasses = 11
 numberOfTrees = 100
 
+start_time = time.time()
 predict_samples()
+print("--- %s seconds ---" % (time.time() - start_time))
+
 
 

@@ -2,6 +2,7 @@ import json
 import numpy as np
 import pandas
 import threading
+import time
 
 pandas.set_option('display.max_columns', None)
 
@@ -32,6 +33,7 @@ def score_calc_class(class_no, sample, score_list):
 
 
 def predict_samples():
+    final_predictions_calculated = []
     for i in range(len(test_X)):
         sample = i
         score_list = [0] * numberOfClasses
@@ -40,10 +42,12 @@ def predict_samples():
         for k in range(numberOfClasses):
             thread = threading.Thread(target=score_calc_class(k, sample, score_list))
             threads.append(thread)
+
         for thread in threads:
             thread.start()
 
-        print(score_list.index(max(score_list)), predictions[sample])
+        final_predictions_calculated.append(score_list.index(max(score_list)))
+    return final_predictions_calculated
 
 
 with open("testX.txt", "r") as f:
@@ -59,6 +63,8 @@ print(50 * "*")
 numberOfClasses = 11
 numberOfTrees = 100
 
+start_time = time.time()
 predict_samples()
+print("--- %s seconds ---" % (time.time() - start_time))
 
 
